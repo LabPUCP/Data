@@ -1,0 +1,49 @@
+```{r}
+library(readxl)
+library(tidyverse)
+```
+
+```{r}
+data=read_xlsx("MINEDU IIEE.xlsx")
+```
+
+```{r}
+names(data)
+```
+
+```{r}
+table(data$Nivel)
+```
+
+Ubigeo Región: 
+
+```{r}
+data$UbigeoDep = data$Ubigeo
+substr(data$UbigeoDep, 3,6) = "0000"
+```
+
+Ubigeo Provincia:
+
+```{r}
+data$UbigeoProv = data$Ubigeo
+substr(data$UbigeoProv, 5,6) = "00"
+```
+
+
+```{r}
+IEDep = data %>% group_by(UbigeoDep, Departamento) %>% summarise(conteo=n())
+head(IEDep)
+```
+
+```{r}
+IEProv = data %>% group_by(UbigeoProv, Provincia) %>% summarise(conteo=n())
+head(IEProv)
+```
+
+```{r}
+IEDist = data %>% group_by(Ubigeo, Distrito) %>% summarise(conteo=n())
+head(IEDist)
+```
+
+
+
